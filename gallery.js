@@ -1,5 +1,5 @@
 import images from "./gallery-items.js";
-//1.Пункт.
+
 const createMarkupEl = createMarkup(images);
 const galleryEl = document.querySelector(".gallery");
 
@@ -19,7 +19,7 @@ function createMarkup(images) {
     })
     .join("");
 }
-//2.Пункт.
+
 galleryEl.addEventListener("click", onImageClick);
 const openModal = document.querySelector(".lightbox");
 const imageOriginal = document.querySelector(".lightbox__image");
