@@ -20,20 +20,43 @@ function createMarkup(images) {
     .join("");
 }
 
-galleryEl.addEventListener("click", onImageClick);
+galleryEl.addEventListener("click", onOpenClick);
 const openModal = document.querySelector(".lightbox");
 const imageOriginal = document.querySelector(".lightbox__image");
 const closeModal = document.querySelector(".lightbox__button");
 const overlayClose = document.querySelector(".lightbox__overlay");
 
-function onImageClick(event) {
+function onOpenClick(event) {
   if (!event.target.classList.contains("gallery__image")) {
     return;
   }
-  console.log(event.target.dataset.source);
   openModal.classList.add("is-open");
+
   imageOriginal.src = event.target.dataset.source;
   imageOriginal.alt = event.target.alt;
+
+  document.addEventListener("keydown", (e) => {
+    const imagesSrc = [];
+    images.forEach((el) => {
+      imagesSrc.push(el.original);
+    });
+    let newIndex = imagesSrc.indexOf(imageOriginal.src);
+    if (newIndex < 0) {
+      return;
+    }
+    if (e.key === "ArrowLeft") {
+      newIndex -= 1;
+    }
+    if (newIndex === -1) {
+      newIndex = imagesSrc.length - 1;
+    } else if (e.key === "ArrowRight") {
+      newIndex += 1;
+    }
+    if (newIndex === imagesSrc.length) {
+      newIndex = 0;
+    }
+    imageOriginal.src = imagesSrc[newIndex];
+  });
 }
 
 closeModal.addEventListener("click", oncloseModalClick);
