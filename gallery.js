@@ -32,8 +32,8 @@ function onOpenClick(event) {
   }
   openModal.classList.add("is-open");
 
-  imageOriginal.src = event.target.dataset.source;
-  imageOriginal.alt = event.target.alt;
+  const t = event.target;
+  updateAttr(t.dataset.source, t.alt);
 
   document.addEventListener("keydown", (e) => {
     const imagesSrc = [];
@@ -58,12 +58,14 @@ function onOpenClick(event) {
     imageOriginal.src = imagesSrc[newIndex];
   });
 }
-
+function updateAttr(src = "", alt = "") {
+  imageOriginal.src = src;
+  imageOriginal.alt = alt;
+}
 closeModal.addEventListener("click", oncloseModalClick);
 function oncloseModalClick() {
   openModal.classList.remove("is-open");
-  imageOriginal.src = "";
-  imageOriginal.alt = "";
+  updateAttr();
 }
 
 overlayClose.addEventListener("click", oncloseModalClick);
